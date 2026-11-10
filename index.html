@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mi Planta · Control de tu planta eléctrica</title>
+<meta name="description" content="App para Android que anota las horas de tu planta eléctrica con un toque y te avisa antes del cambio de aceite. Funciona sin internet.">
+<meta property="og:title" content="Mi Planta · Tu planta, siempre al día">
+<meta property="og:description" content="Anota las horas de tu planta con un toque y recibe el aviso del cambio de aceite. Sin internet.">
+<meta property="og:image" content="img/inicio.jpg">
+<meta name="theme-color" content="#0d1b2a">
+<link rel="icon" href="favicon.png">
+<style>
+:root{--navy:#0d1b2a;--navy2:#13263b;--or:#ff7a1a;--or2:#f0590c;--gr:#16c784;--tx:#0f172a;--mut:#64748b;--bg:#f3f6fb;--card:#fff;--line:#e6ebf2}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font:16px/1.55 Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--tx);background:var(--bg)}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.w{max-width:1080px;margin:0 auto;padding:0 18px}
+/* barra */
+.bar{position:sticky;top:0;z-index:20;background:rgba(13,27,42,.92);backdrop-filter:blur(8px);color:#fff}
+.bar .w{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:19px;letter-spacing:-.3px}
+.brand img{width:34px;height:34px;border-radius:9px}
+.bar nav{display:flex;gap:22px;font-size:14px;font-weight:700;opacity:.85}
+.bar nav a:hover{color:#ffb070}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:16px;padding:15px 24px;font-weight:900;font-size:17px;border:0;cursor:pointer;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn.or{background:linear-gradient(135deg,#ff8a2b,#f0590c);color:#fff;box-shadow:0 12px 26px -10px rgba(240,89,12,.75)}
+.btn.sm{padding:9px 15px;font-size:14px;border-radius:12px}
+.btn.wa{background:#25d366;color:#fff;box-shadow:0 12px 26px -12px rgba(37,211,102,.8)}
+.btn.gh{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
+/* hero */
+.hero{background:radial-gradient(90% 70% at 85% 10%,rgba(255,122,26,.35),transparent 60%),linear-gradient(180deg,var(--navy),var(--navy2));color:#fff;overflow:hidden;position:relative}
+.hero:after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.09) 1.5px,transparent 1.6px);background-size:20px 20px;-webkit-mask-image:linear-gradient(120deg,transparent 40%,#000);mask-image:linear-gradient(120deg,transparent 40%,#000);pointer-events:none}
+.hero .w{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;padding-top:56px;padding-bottom:0;position:relative;z-index:1}
+.chip{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);padding:7px 13px;border-radius:99px;font-size:13px;font-weight:700}
+h1{font-size:clamp(38px,6vw,60px);line-height:1.04;letter-spacing:-1.5px;font-weight:900;margin:18px 0 0}
+h1 span{color:#ff8a2b}
+.lead{font-size:18px;color:#b6c2d1;margin-top:16px;max-width:520px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.mini{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px;font-size:14px;font-weight:700;color:#dbe4ef}
+.phones{position:relative;height:560px}
+.phone{position:absolute;width:250px;border-radius:34px;padding:9px;background:#0a1420;box-shadow:0 30px 60px -20px rgba(0,0,0,.7),0 0 0 2px rgba(255,255,255,.08)}
+.phone img{border-radius:26px}
+.p1{left:8%;top:30px;transform:rotate(-6deg)}
+.p2{right:4%;top:70px;transform:rotate(5deg);z-index:2}
+/* secciones */
+section.s{padding:72px 0}
+.kick{color:var(--or2);font-weight:900;font-size:13px;letter-spacing:1.4px;text-transform:uppercase}
+h2{font-size:clamp(28px,4vw,40px);letter-spacing:-.8px;line-height:1.1;font-weight:900;margin-top:8px}
+.sub{color:var(--mut);font-size:17px;margin-top:10px;max-width:640px}
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+.f{background:var(--card);border:1px solid #edf1f6;border-radius:22px;padding:22px;box-shadow:0 6px 20px -12px rgba(15,23,42,.2)}
+.f .ic{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-size:24px;margin-bottom:12px}
+.f b{font-size:17px;display:block}
+.f p{color:var(--mut);font-size:14.5px;margin-top:4px}
+/* galería */
+.gal{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:30px 18px 24px;margin:0 -18px;-webkit-overflow-scrolling:touch}
+.gal::-webkit-scrollbar{height:8px}.gal::-webkit-scrollbar-thumb{background:#cfd8e3;border-radius:9px}
+.shot{flex:none;width:230px;scroll-snap-align:center;text-align:center}
+.shot .fr{border-radius:30px;padding:8px;background:#0a1420;box-shadow:0 18px 40px -18px rgba(15,23,42,.55)}
+.shot img{border-radius:23px}
+.shot.pdf{width:300px}.shot.pdf .fr{background:#fff;border-radius:14px;padding:6px;border:1px solid var(--line)}.shot.pdf img{border-radius:8px}
+.shot span{display:block;margin-top:12px;font-weight:800;font-size:14.5px}
+.shot small{color:var(--mut);font-size:13px}
+.hint{color:var(--mut);font-size:13px;text-align:center}
+/* pasos */
+.dark{background:linear-gradient(180deg,var(--navy),var(--navy2));color:#fff}
+.dark .sub{color:#b6c2d1}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+.st{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:22px;position:relative}
+.st .n{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#ffb020,#ff6a00);display:grid;place-items:center;font-weight:900;font-size:19px;margin-bottom:12px}
+.st b{font-size:17px}.st p{color:#b6c2d1;font-size:14.5px;margin-top:4px}
+.act{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;margin-top:30px;background:rgba(255,255,255,.05);border-radius:24px;padding:20px}
+.act img{width:180px;border-radius:20px}
+.act ul{padding-left:20px;color:#dbe4ef}.act li{margin:6px 0}
+/* faq */
+.faq{margin-top:28px;display:grid;gap:12px;max-width:820px}
+details{background:var(--card);border:1px solid #edf1f6;border-radius:18px;padding:16px 20px}
+summary{font-weight:800;font-size:16.5px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";color:var(--or2);font-size:22px;line-height:1}
+details[open] summary:after{content:"–"}
+details p{color:var(--mut);margin-top:8px;font-size:15px}
+/* final */
+.final{text-align:center;padding:70px 0}
+.final .big{width:96px;height:96px;border-radius:24px;margin:0 auto 18px;box-shadow:0 18px 40px -14px rgba(240,89,12,.6)}
+.final .cta{justify-content:center}
+.note{color:var(--mut);font-size:13.5px;margin-top:14px}
+footer{background:var(--navy);color:#8a97aa;text-align:center;padding:26px 18px;font-size:13px}
+@media (max-width:860px){
+  .hero .w{grid-template-columns:1fr;padding-top:40px}
+  .phones{height:420px;margin:0 auto;width:100%;max-width:400px}
+  .phone{width:190px;border-radius:28px;padding:7px}.phone img{border-radius:22px}
+  .p1{left:2%;top:20px}.p2{right:2%;top:50px}
+  .feats,.steps{grid-template-columns:1fr 1fr}
+  .bar nav{display:none}
+  .act{grid-template-columns:1fr;text-align:left}.act img{width:160px;margin:0 auto}
+}
+@media (max-width:540px){
+  .feats,.steps{grid-template-columns:1fr}
+  section.s{padding:54px 0}
+  .lead{font-size:16.5px}
+  .btn{width:100%}
+  .bar .btn{width:auto}
+  .brand{white-space:nowrap}
+  .cta{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<header class="bar"><div class="w">
+  <a class="brand" href="#"><img src="img/icono.png" alt="">Mi Planta</a>
+  <nav><a href="#que-hace">Qué hace</a><a href="#fotos">Fotos</a><a href="#empezar">Cómo empezar</a><a href="#preguntas">Preguntas</a></nav>
+  <a class="btn or sm js-apk" href="MiPlanta.apk" download>⬇ Descargar</a>
+</div></header>
+
+<div class="hero"><div class="w">
+  <div style="padding-bottom:40px">
+    <span class="chip">⚡ Funciona sin internet · Android</span>
+    <h1>Tu planta,<br><span>siempre al día</span></h1>
+    <p class="lead">Anota cuándo pones y apagas tu planta eléctrica con un solo toque. La app cuenta las horas sola y te avisa antes del cambio de aceite.</p>
+    <div class="cta">
+      <a class="btn or js-apk" href="MiPlanta.apk" download>⬇ Descargar para Android</a>
+      <a class="btn gh" href="#fotos">Ver cómo se ve</a>
+    </div>
+    <div class="mini"><span>⏱ Horas solas</span><span>🛢 Aviso de aceite</span><span>📗 Excel y PDF</span><span>🌙 Modo oscuro</span></div>
+  </div>
+  <div class="phones">
+    <div class="phone p1"><img src="img/encendida.jpg" alt="Planta encendida con el contador de tiempo" loading="lazy"></div>
+    <div class="phone p2"><img src="img/inicio.jpg" alt="Pantalla de inicio de Mi Planta"></div>
+  </div>
+</div></div>
+
+<section class="s" id="que-hace"><div class="w">
+  <div class="kick">Qué hace</div>
+  <h2>Todo el control de tu planta, en el bolsillo</h2>
+  <p class="sub">Olvídate de la libreta y de calcular horas. Mi Planta lo lleva todo por ti, sin datos móviles ni wifi.</p>
+  <div class="feats">
+    <div class="f"><div class="ic" style="background:#e3f9ef">▶️</div><b>Un toque y listo</b><p>Tocas "La encendí" y "La apagué". La fecha, la hora y las horas de uso se anotan solas.</p></div>
+    <div class="f"><div class="ic" style="background:#e8f1ff">🛢</div><b>Aviso del aceite</b><p>Te avisa cuando quedan 10 horas para el cambio de aceite y suena una alarma cuando ya toca.</p></div>
+    <div class="f"><div class="ic" style="background:#fff3e0">⏱</div><b>Siempre a la vista</b><p>Mientras está encendida ves el tiempo arriba en las notificaciones, y te avisa si lleva 6 horas.</p></div>
+    <div class="f"><div class="ic" style="background:#fff3e0">🔧</div><b>Mantenimientos</b><p>Aceite, bujía, filtro de aire, filtro de combustible y revisión, con semáforo de colores.</p></div>
+    <div class="f"><div class="ic" style="background:#e9f9f1">📊</div><b>Gráficos y cuentas</b><p>Horas por mes, promedio por día, este mes, este año y cuánto aceite te queda.</p></div>
+    <div class="f"><div class="ic" style="background:#f1f5f9">📗</div><b>Excel y PDF</b><p>Saca un Excel con todo lo anotado o un informe en PDF para guardar o mandar por WhatsApp.</p></div>
+  </div>
+</div></section>
+
+<section class="s" id="fotos" style="padding-top:20px"><div class="w">
+  <div class="kick">Fotos de la app</div>
+  <h2>Así se ve Mi Planta</h2>
+  <p class="sub">En estilo claro u oscuro, como prefieras.</p>
+  <div class="gal">
+    <div class="shot"><div class="fr"><img src="img/bienvenida.jpg" alt="" loading="lazy"></div><span>Bienvenida</span><small>Configuras tu planta una vez</small></div>
+    <div class="shot"><div class="fr"><img src="img/inicio.jpg" alt="" loading="lazy"></div><span>Inicio</span><small>Horas y aceite de un vistazo</small></div>
+    <div class="shot"><div class="fr"><img src="img/encendida.jpg" alt="" loading="lazy"></div><span>Encendida</span><small>El tiempo cuenta solo</small></div>
+    <div class="shot"><div class="fr"><img src="img/aviso.jpg" alt="" loading="lazy"></div><span>Avisos</span><small>Notificación y alarma del aceite</small></div>
+    <div class="shot"><div class="fr"><img src="img/historial.jpg" alt="" loading="lazy"></div><span>Historial</span><small>Cada vez que la usaste</small></div>
+    <div class="shot"><div class="fr"><img src="img/mantenimientos.jpg" alt="" loading="lazy"></div><span>Mantenimientos</span><small>Y el aceite que te queda</small></div>
+    <div class="shot"><div class="fr"><img src="img/graficos.jpg" alt="" loading="lazy"></div><span>Gráficos</span><small>Horas por mes</small></div>
+    <div class="shot"><div class="fr"><img src="img/inicio_oscuro.jpg" alt="" loading="lazy"></div><span>Modo oscuro</span><small>Descansa la vista de noche</small></div>
+    <div class="shot pdf"><div class="fr"><img src="img/pdf.jpg" alt="" loading="lazy"></div><span>Informe en PDF</span><small>Listo para compartir</small></div>
+  </div>
+  <p class="hint">← Desliza para ver más →</p>
+</div></section>
+
+<section class="s dark" id="empezar"><div class="w">
+  <div class="kick" style="color:#ffb070">Cómo empezar</div>
+  <h2>En 3 pasos la tienes funcionando</h2>
+  <p class="sub">La app se activa una sola vez con una clave para tu teléfono.</p>
+  <div class="steps">
+    <div class="st"><div class="n">1</div><b>Descarga e instala</b><p>Toca "Descargar". Si Android te lo pide, permite instalar apps de fuera de la tienda.</p></div>
+    <div class="st"><div class="n">2</div><b>Pide tu clave</b><p>Al abrirla te sale el código de tu teléfono. Mándalo por WhatsApp y te responden con tu clave.</p></div>
+    <div class="st"><div class="n">3</div><b>Configura tu planta</b><p>Pon el modelo, el combustible y cada cuánto toca el aceite. ¡Y a usarla!</p></div>
+  </div>
+  <div class="act">
+    <img src="img/activar.jpg" alt="Pantalla de activación" loading="lazy">
+    <ul>
+      <li>La clave solo funciona en <b>tu</b> teléfono.</li>
+      <li>Después de activarla no necesita internet nunca más.</li>
+      <li>Tus datos se quedan en tu teléfono; puedes guardar una copia de seguridad.</li>
+    </ul>
+  </div>
+</div></section>
+
+<section class="s" id="preguntas"><div class="w">
+  <div class="kick">Preguntas</div>
+  <h2>Preguntas frecuentes</h2>
+  <div class="faq">
+    <details><summary>¿Necesita internet?</summary><p>No. Funciona completamente sin datos ni wifi. Solo necesitas WhatsApp una vez para pedir la clave.</p></details>
+    <details><summary>¿Sirve para cualquier planta?</summary><p>Sí. Al empezar pones el modelo, si es de gasolina, gas o diésel, y cada cuántas horas le toca cada mantenimiento según su manual.</p></details>
+    <details><summary>Mi planta ya tiene horas de uso, ¿qué hago?</summary><p>Al configurarla pones las horas que ya tiene y la app sigue contando desde ahí.</p></details>
+    <details><summary>¿Funciona en iPhone?</summary><p>Por ahora solo en teléfonos Android.</p></details>
+    <details><summary>¿Y si cambio de teléfono?</summary><p>Guarda una copia de seguridad desde Ajustes, pide una clave para el teléfono nuevo y restaura la copia allí.</p></details>
+    <details><summary>¿Me avisa aunque la app esté cerrada?</summary><p>Sí. Los avisos del aceite, la alarma y el aviso de 6 horas encendida llegan aunque la app esté cerrada. Acepta el permiso de notificaciones la primera vez.</p></details>
+  </div>
+</div></section>
+
+<section class="final dark"><div class="w">
+  <img class="big" src="img/icono.png" alt="">
+  <h2>Descarga Mi Planta</h2>
+  <p class="sub" style="margin:10px auto 0">Lleva el control de tu planta eléctrica sin libretas ni cálculos.</p>
+  <div class="cta" style="margin-top:26px">
+    <a class="btn or js-apk" href="MiPlanta.apk" download>⬇ Descargar para Android</a>
+    <a class="btn wa" id="waBtn" href="#" style="display:none">💬 Pedir mi clave por WhatsApp</a>
+  </div>
+  <p class="note" style="color:#8a97aa">Android 6 o superior · ocupa menos de 1 MB</p>
+</div></section>
+
+<footer>Mi Planta · Control de horas y mantenimiento para plantas eléctricas</footer>
+
+<script>
+/* ===== AJUSTES DE LA PÁGINA ===== */
+const APK_URL  = 'MiPlanta.apk';   // nombre o enlace del archivo de la app
+const WHATSAPP = '5354600210';     // tu número para pedir la clave, ej: '5355555555' (vacío = no se muestra el botón)
+/* ================================= */
+document.querySelectorAll('.js-apk').forEach(a=>a.href=APK_URL);
+if(WHATSAPP){ const b=document.getElementById('waBtn'); b.style.display='';
+  b.href='https://wa.me/'+WHATSAPP.replace(/\D/g,'')+'?text='+encodeURIComponent('Hola, quiero la app Mi Planta y mi clave de activación.'); }
+</script>
+</body>
+</html>
