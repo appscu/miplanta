@@ -1,11 +1,10 @@
 {
-  "code": 3,
-  "name": "1.2",
+  "code": 4,
+  "name": "1.3",
   "apk": "https://appscu.github.io/miplanta/MiPlanta.apk",
   "notas": [
-    "Actualizaciones desde dentro de la app",
+    "Barra de progreso al descargar actualizaciones",
     "Elige qué lleva tu planta: filtro de aceite, bujía, filtro de aire, filtro de combustible y revisión",
-    "Botón para contactar por WhatsApp",
-    "Correcciones pequeñas"
+    "Botón para contactar por WhatsApp"
   ]
 }
