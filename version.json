@@ -1,9 +1,9 @@
 {
-  "code": 5,
-  "name": "1.4",
+  "code": 6,
+  "name": "1.5",
   "apk": "https://appscu.github.io/miplanta/MiPlanta.apk",
   "notas": [
-    "Nuevo ajuste: aceite que lleva tu planta. Cada cambio de aceite descuenta esa cantidad sola",
-    "Barra de progreso al descargar actualizaciones"
+    "Activación por QR, sin internet, con el vendedor al lado",
+    "La pantalla de activación muestra el QR de tu teléfono"
   ]
 }
