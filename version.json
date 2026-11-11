@@ -1,9 +1,9 @@
 {
-  "code": 6,
-  "name": "1.5",
+  "code": 7,
+  "name": "1.6",
   "apk": "https://appscu.github.io/miplanta/MiPlanta.apk",
   "notas": [
     "Activación por QR, sin internet, con el vendedor al lado",
-    "La pantalla de activación muestra el QR de tu teléfono"
+    "Actualizaciones más seguras: al terminar la descarga, toca la notificación para instalar"
   ]
 }
