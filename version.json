@@ -1,11 +1,9 @@
 {
-  "code": 9,
-  "name": "1.8",
+  "code": 10,
+  "name": "1.9",
   "apk": "https://appscu.github.io/miplanta/MiPlanta.apk",
   "notas": [
-    "Nuevo widget para la pantalla de inicio: enciende y apaga la planta sin abrir la app",
-    "Widget pequeño con solo el botón",
-    "La notificación de planta encendida ya no se pierde si la borras",
-    "Preparada para los Android más nuevos"
+    "Prueba gratis de 3 días con clave de prueba",
+    "Lo que anotes en la prueba se queda guardado al activar"
   ]
 }
