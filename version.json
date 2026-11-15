@@ -1,9 +1,11 @@
 {
-  "code": 7,
-  "name": "1.6",
+  "code": 9,
+  "name": "1.8",
   "apk": "https://appscu.github.io/miplanta/MiPlanta.apk",
   "notas": [
-    "Activación por QR, sin internet, con el vendedor al lado",
-    "Actualizaciones más seguras: al terminar la descarga, toca la notificación para instalar"
+    "Nuevo widget para la pantalla de inicio: enciende y apaga la planta sin abrir la app",
+    "Widget pequeño con solo el botón",
+    "La notificación de planta encendida ya no se pierde si la borras",
+    "Preparada para los Android más nuevos"
   ]
 }
